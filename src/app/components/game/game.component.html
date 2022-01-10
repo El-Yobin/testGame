@@ -1,0 +1,23 @@
+<section (contextmenu)="$event.preventDefault()" class="wrapper" >
+  <div class="canvas" #container>
+    <div class="overlay" >
+      <div class="inventory" >
+        <img alt="primary" [src]="player?.inventory?.getStorage()?.primary?.imageUrl"
+             class="gun"
+             [class.gun--selected]="player?.inventory?.getSelectedWeapon()?.inventorySlot === 'primary'"
+             />
+
+        <img alt="secondary" [src]="player?.inventory?.getStorage()?.secondary?.imageUrl"
+             class="gun"
+             [class.gun--selected]="player?.inventory?.getSelectedWeapon()?.inventorySlot === 'secondary'"
+
+        />
+        <img alt="melee" [src]="player?.inventory?.getStorage()?.melee?.imageUrl"
+             class="gun"
+             [class.gun--selected]="player?.inventory?.getSelectedWeapon()?.inventorySlot === 'melee'"
+
+        />
+      </div>
+    </div>
+  </div>
+</section>
