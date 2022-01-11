@@ -1,19 +1,12 @@
 import {Melee} from "./abstract/melee";
-import {InventorySlot} from "../../controller/inventory";
-import {FireMode, MELEE, MeleeNames} from "../../../common/constants/guns";
 import {Vector} from "p5";
 import {ParticleSystem} from "../../../common/particle-system";
 import {SwordSwing} from "../particles/sword-swing";
 import {SwordSprite} from "./swordSprite";
+import {MELEE, MeleeConfig} from "../../../common/constants/guns";
 
 export class Sword extends Melee {
-  equipped: boolean = false;
-  name: MeleeNames = MELEE.Sword.name;
-  assetName: string = MELEE.Sword.assetName;
-  fireMode: FireMode = MELEE.Sword.fireMode;
-  fireRate: number = MELEE.Sword.fireRate;
-  imageUrl: string = MELEE.Sword.imageUrl;
-  inventorySlot: InventorySlot = MELEE.Sword.inventorySlot;
+  public config: MeleeConfig = MELEE.Sword;
   private particleSystem!: ParticleSystem<SwordSwing>;
   private animationSprite!: SwordSprite;
   private coolDown: boolean = false;
@@ -24,8 +17,8 @@ export class Sword extends Melee {
     this.loadAssets();
   }
 
-  public shoot(position: Vector, direction: Vector, offset: Vector): void {
-    this.debouncedShooting(position, direction, offset);
+  public shoot(position: Vector, direction: Vector): void {
+    this.debouncedShooting(position, direction);
   }
 
   public update(): void {
@@ -37,21 +30,23 @@ export class Sword extends Melee {
   }
 
 
-  private emitSwing(position: Vector, direction: Vector, offset: Vector): void {
+  private emitSwing(position: Vector, direction: Vector): void {
+    const angle = Math.atan2(direction.y, direction.x) + this.p5.radians(0)
+    const offset = this.p5.createVector(Math.cos(angle) * this.config.offsetDistance, Math.sin(angle) * this.config.offsetDistance)
     this.particleSystem.emit(new SwordSwing(position, direction, offset, this.animationSprite))
   }
 
-  private debouncedShooting(position: Vector, direction: Vector, offset: Vector): void {
+  private debouncedShooting(position: Vector, direction: Vector): void {
     if (this.coolDown) return;
     this.coolDown = true;
-    this.emitSwing(position, direction, offset);
+    this.emitSwing(position, direction);
     setTimeout(() => {
       this.coolDown = false;
-    }, this.fireRate)
+    }, this.config.fireRate)
   }
 
   private loadAssets(): void {
-    this.particleSystem = this.particleService.getSystem(this.name);
-    this.animationSprite = new SwordSprite(this.assetsService.getAnimation(this.assetName), this.fireRate / 5000);
+    this.particleSystem = this.particleService.getSystem(this.config.name);
+    this.animationSprite = new SwordSprite(this.assetsService.getAnimation(this.config.assetName), this.config.fireRate / 5000);
   }
 }

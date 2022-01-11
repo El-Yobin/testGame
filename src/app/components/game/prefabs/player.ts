@@ -28,13 +28,13 @@ export class Player extends Character {
     this.p5.push();
     this.p5.translate(this.position.x, this.position.y);
     this.p5.rotate(this.calculateMouseAngle() - this.p5.radians(90))
-    Object.values(this.inventory.getStorage()).forEach(item => item?.update());
-    this.inventory.getSelectedWeapon()?.show();
+    this.inventory.getSelectedWeapon().show();
     this.p5.circle(0, 0, 60);
     this.p5.pop();
   }
 
   public update(): void {
+    this.inventory.update();
     this.moveByInput();
     this.checkShooting();
   }
@@ -51,7 +51,7 @@ export class Player extends Character {
       .subscribeToShooting()
       .pipe(takeWhile((_) => this.active))
       .subscribe((pressed) => {
-        if (this.inventory.getSelectedWeapon()?.fireMode === 'auto') {
+        if (this.inventory.getSelectedWeapon().config.fireMode === 'auto') {
           this.shooting = pressed;
           return;
         }
@@ -99,11 +99,8 @@ export class Player extends Character {
     const x = this.p5.mouseX - this.p5.width / 2;
     const y = this.p5.mouseY - this.p5.height / 2;
 
-    const angle = Math.atan2(y, x);
-    const offset = this.p5.createVector(Math.cos(angle) * 40, Math.sin(angle) * 40)
-
     this.inventory
       .getSelectedWeapon()
-      ?.shoot(this.position, this.p5.createVector(x, y), offset);
+      ?.shoot(this.position, this.p5.createVector(x, y));
   }
 }

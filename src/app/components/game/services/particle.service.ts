@@ -13,6 +13,7 @@ export class ParticleService {
     'Pistol': new ParticleSystem<Bullet>(),
     'MachineGun': new ParticleSystem<Bullet>(),
     'Sword': new ParticleSystem<SwordSwing>(),
+    'Hands': new ParticleSystem<any>(),
   };
 
   constructor() {

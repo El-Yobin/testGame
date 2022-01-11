@@ -2,28 +2,20 @@ import {Gun} from './abstract/gun';
 import {ParticleSystem} from '../../../common/particle-system';
 import {Bullet} from '../particles/bullet';
 import {Vector} from 'p5';
-import {InventorySlot} from '../../controller/inventory';
-import {GunNames, GUNS} from '../../../common/constants/guns';
+import {GunConfig, GUNS} from '../../../common/constants/guns';
 
 export class Pistol extends Gun {
-  public readonly name: GunNames = GUNS.Pistol.name;
-  public readonly imageUrl: string = GUNS.Pistol.imageUrl;
-  public readonly inventorySlot: InventorySlot = GUNS.Pistol.inventorySlot;
-  public readonly shotVelocity = GUNS.Pistol.shotVelocity;
-  public readonly fireMode = GUNS.Pistol.fireMode;
-  public readonly fireRate = GUNS.Pistol.fireRate;
-  public equipped: boolean = false;
-  public spread: number = GUNS.Pistol.spread;
+  public config: GunConfig = GUNS.Pistol;
   public bullets: ParticleSystem<Bullet>;
   private coolDown: boolean = false;
 
   constructor() {
     super();
-    this.bullets = this.particleService.getSystem(this.name);
+    this.bullets = this.particleService.getSystem(this.config.name);
   }
 
-  public shoot(position: Vector, direction: Vector, offset: Vector): void {
-    this.debouncedShooting(position.copy().add(offset), direction);
+  public shoot(position: Vector, direction: Vector): void {
+    this.debouncedShooting(position, direction);
   }
 
   public update(): void {
@@ -34,8 +26,16 @@ export class Pistol extends Gun {
   }
 
   private emitBullet(position: Vector, direction: Vector): void {
+    const angle = Math.atan2(direction.y, direction.x) + this.p5.radians(0)
+    const offset = this.p5.createVector(Math.cos(angle) * this.config.offsetDistance, Math.sin(angle) * this.config.offsetDistance)
     this.bullets.emit(
-      new Bullet(position, direction.setMag(this.shotVelocity).add((Math.random() * this.spread - (this.spread / 2)), (Math.random() * this.spread - (this.spread / 2))).setMag(this.shotVelocity))
+      new Bullet(
+        position.copy().add(offset),
+        direction.setMag(this.config.shotVelocity)
+          .add(
+            (Math.random() * this.config.spread - (this.config.spread / 2)),
+            (Math.random() * this.config.spread - (this.config.spread / 2)))
+          .setMag(this.config.shotVelocity))
     );
   }
 
@@ -45,6 +45,6 @@ export class Pistol extends Gun {
     this.emitBullet(position, direction);
     setTimeout(() => {
       this.coolDown = false;
-    }, this.fireRate)
+    }, this.config.fireRate)
   }
 }

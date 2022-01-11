@@ -17,7 +17,7 @@ export class SwordSprite {
   public show(position: Vector, direction: Vector, offset: { x: number; y: number } = {x: 0, y: 0}): void {
     const floorIndex = Math.floor(this.index);
     if (floorIndex < this.animation.length) {
-      const angle = Math.atan2(direction.y, direction.x) - this.p5.radians(-90)
+      const angle = Math.atan2(direction.y, direction.x) + this.p5.radians(90)
       this.p5.push();
       this.p5.translate(position.x + offset.x, position.y + offset.y)
       this.p5.rotate(angle)

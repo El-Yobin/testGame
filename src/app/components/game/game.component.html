@@ -1,21 +1,24 @@
-<section (contextmenu)="$event.preventDefault()" class="wrapper" >
-  <div class="canvas" #container>
-    <div class="overlay" >
-      <div class="inventory" >
-        <img alt="primary" [src]="player?.inventory?.getStorage()?.primary?.imageUrl"
-             class="gun"
-             [class.gun--selected]="player?.inventory?.getSelectedWeapon()?.inventorySlot === 'primary'"
-             />
-
-        <img alt="secondary" [src]="player?.inventory?.getStorage()?.secondary?.imageUrl"
-             class="gun"
-             [class.gun--selected]="player?.inventory?.getSelectedWeapon()?.inventorySlot === 'secondary'"
-
+<section (contextmenu)="$event.preventDefault()" class="wrapper">
+  <div #container class="canvas">
+    <div class="overlay">
+      <div *ngIf="player?.inventory" class="inventory">
+        <img
+          [class.gun--selected]="player.inventory.getSelectedWeapon()?.config?.inventorySlot === 'primary'"
+          [src]="player.inventory.getStorage()?.primary?.config?.imageUrl"
+          alt="primary"
+          class="gun"
         />
-        <img alt="melee" [src]="player?.inventory?.getStorage()?.melee?.imageUrl"
-             class="gun"
-             [class.gun--selected]="player?.inventory?.getSelectedWeapon()?.inventorySlot === 'melee'"
-
+        <img
+          [class.gun--selected]="player.inventory.getSelectedWeapon()?.config?.inventorySlot === 'secondary'"
+          [src]="player.inventory.getStorage()?.secondary?.config?.imageUrl"
+          alt="secondary"
+          class="gun"
+        />
+        <img
+          [class.gun--selected]="player.inventory.getSelectedWeapon()?.config?.inventorySlot === 'melee'"
+          [src]="player.inventory.getStorage()?.melee?.config?.imageUrl"
+          alt="melee"
+          class="gun"
         />
       </div>
     </div>
