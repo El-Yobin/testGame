@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {P5JSInvoker} from '../common/p5JSInvoker';
 import {p5InstanceExtensions} from 'p5';
 import {P5InstanceService} from './services/p5-instance.service';
-import {Player} from './prefabs/player';
+import {Player} from './prefabs/characters/player';
 import {Camera} from './controller/camera';
 import {BackgroundGenerator} from './controller/backgroundGenerator';
 import {ParticleService} from "./services/particle.service";
@@ -14,9 +14,10 @@ import {AssetsService} from "./services/assets.service";
   styleUrls: ['./game.component.scss'],
 })
 export class GameComponent extends P5JSInvoker implements AfterViewInit {
+  public frameRate: number = 70;
   public player!: Player;
+  public p5!: p5InstanceExtensions;
   @ViewChild('container') private container!: ElementRef;
-  private p5!: p5InstanceExtensions;
   private p5Canvas: any;
   private camera!: Camera;
   private backgroundGenerator!: BackgroundGenerator;
@@ -45,6 +46,8 @@ export class GameComponent extends P5JSInvoker implements AfterViewInit {
   }
 
   public draw(p5: p5InstanceExtensions): void {
+    this.p5.frameRate(this.frameRate)
+    this.updateDeltaTime();
     this.updateCanvas();
     this.updateParticles();
     this.updatePlayer();
@@ -91,5 +94,9 @@ export class GameComponent extends P5JSInvoker implements AfterViewInit {
 
   private updateCamera(): void {
     this.camera.update(this.player.position);
+  }
+
+  private updateDeltaTime(): void {
+    P5InstanceService.delta = this.p5.deltaTime;
   }
 }

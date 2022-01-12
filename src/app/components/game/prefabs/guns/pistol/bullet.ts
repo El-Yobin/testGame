@@ -55,7 +55,7 @@ export class Bullet extends RigidBody implements Particle {
   }
 
   update(): void {
-    this.applyAirResistance(0.001);
+    this.applyAirResistance(0.01);
     this.updatePhysics();
   }
 }

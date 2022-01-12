@@ -2,6 +2,7 @@ import {Sprite} from "./abstract/sprite";
 import {Image, Vector} from "p5";
 import {AnimationAsset} from "../../game/services/assets.service";
 import {splitSpriteSheet} from "../tools/functions";
+import {P5InstanceService} from "../../game/services/p5-instance.service";
 
 export class AnimationSprite extends Sprite {
   public animation: Image[] = [];
@@ -34,7 +35,7 @@ export class AnimationSprite extends Sprite {
   }
 
   public update(): void {
-    this.index += this.speed;
+    this.index += this.speed * P5InstanceService.delta;
   }
 
   public reset(index: number = 0): void {

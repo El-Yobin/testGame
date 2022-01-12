@@ -24,3 +24,13 @@
     </div>
   </div>
 </section>
+
+<ul *ngIf="p5" class="info">
+  <input [(ngModel)]="frameRate" max="144" min="15" type="range"/>
+  <li>
+    <b>FPS: </b><span>{{p5.frameRate().toPrecision(3)}}</span>
+  </li>
+  <li>
+    <b>Delta: </b><span>{{(p5.deltaTime / 10).toPrecision(3)}}</span>
+  </li>
+</ul>

@@ -1,15 +1,17 @@
-import {Character} from './character';
 import {Vector} from 'p5';
-import {LocatorService} from '../services/locator.service';
-import {UserInputService} from '../services/user-input.service';
-import {Inventory, InventorySlot} from '../controller/inventory';
-import {Pistol} from './guns/pistol/pistol';
+import {LocatorService} from '../../services/locator.service';
+import {UserInputService} from '../../services/user-input.service';
+import {Inventory, InventorySlot} from '../../controller/inventory';
+import {Pistol} from '../guns/pistol/pistol';
 import {takeWhile} from 'rxjs/operators';
-import {MachineGun} from "./guns/machine-gun/machine-gun";
-import {Sword} from "./melee/sword/sword";
+import {MachineGun} from "../guns/machine-gun/machine-gun";
+import {Sword} from "../melee/sword/sword";
+import {P5InstanceService} from "../../services/p5-instance.service";
+import {RigidBody} from "../../../common/rigidBody";
 
-export class Player extends Character {
+export class Player extends RigidBody {
   public inventory: Inventory = new Inventory();
+  private maxSpeed = 5;
   private active = true;
   private moveInput: Vector = new Vector();
   private userInput: UserInputService;
@@ -70,15 +72,14 @@ export class Player extends Character {
   }
 
   private moveByInput(): void {
-    this.constrainPosition(0, 5000);
     this.applyForce(this.moveInput);
-    this.velocity.limit(this.maxSpeed);
+    this.velocity.limit(this.maxSpeed * P5InstanceService.delta);
     if (!this.moveInput.mag()) {
-      if (this.velocity.mag() < 0.5) {
+      if (this.velocity.mag() < 0.5 * P5InstanceService.delta) {
         this.velocity.mult(0);
         return;
       }
-      this.applyFriction(0.5);
+      this.applyFriction(0.25 * P5InstanceService.delta);
     }
   }
 

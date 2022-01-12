@@ -14,8 +14,6 @@ export abstract class RigidBody {
     this.position = this.p5.createVector(0, 0);
   }
 
-  public abstract show(): void;
-
   public constrainPosition(low: number, high: number): void {
     this.position.x = this.p5.constrain(this.position.x, low, high);
     this.position.y = this.p5.constrain(this.position.y, low, high);
@@ -31,9 +29,7 @@ export abstract class RigidBody {
   }
 
   public applyAirResistance(dragCoefficient: number): void {
-    const speed = this.velocity.mag();
-    const dragForce = this.velocity.copy().normalize();
-    dragForce.mult(-dragCoefficient * speed * speed);
+    const dragForce = this.velocity.copy().mult(-dragCoefficient);
     this.applyForce(dragForce);
   }
 
@@ -46,10 +42,10 @@ export abstract class RigidBody {
   }
 
   private applyAcceleration(): void {
-    this.position = this.position.add(this.velocity.add(this.acceleration));
+    this.position = this.position.add(this.velocity.add(this.acceleration.mult(P5InstanceService.delta)));
   }
 
   private resetAcceleration(): void {
-    this.acceleration.mult(0);
+    this.acceleration.set(0, 0);
   }
 }
