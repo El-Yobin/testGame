@@ -4,8 +4,8 @@ import {P5InstanceService} from '../game/services/p5-instance.service';
 export abstract class RigidBody {
   public mass = 1;
   public position: Vector;
-  public acceleration: Vector;
   public velocity: Vector;
+  public acceleration: Vector;
   protected p5: p5InstanceExtensions = P5InstanceService.p5Instance;
 
   protected constructor() {

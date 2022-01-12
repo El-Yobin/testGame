@@ -7,6 +7,7 @@ import {Camera} from './controller/camera';
 import {BackgroundGenerator} from './controller/backgroundGenerator';
 import {ParticleService} from "./services/particle.service";
 import {AssetsService} from "./services/assets.service";
+import {Obstacle} from "../common/obstacle";
 
 @Component({
   selector: 'app-game',
@@ -43,12 +44,14 @@ export class GameComponent extends P5JSInvoker implements AfterViewInit {
     this.createCanvas();
     this.createCamera();
     this.createPlayer();
+    P5InstanceService.obstacle = new Obstacle();
   }
 
   public draw(p5: p5InstanceExtensions): void {
     this.p5.frameRate(this.frameRate)
     this.updateDeltaTime();
     this.updateCanvas();
+    P5InstanceService.obstacle.show();
     this.updateParticles();
     this.updatePlayer();
   }
