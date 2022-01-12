@@ -1,13 +1,12 @@
-import {Gun} from './abstract/gun';
-import {Bullet} from '../particles/bullet';
+import {Gun} from '../abstract/gun';
+import {ParticleSystem} from '../../../../common/particle-system';
+import {Bullet} from './bullet';
 import {Vector} from 'p5';
-import {GunConfig, GUNS} from '../../../common/constants/guns';
+import {GunConfig, GUNS} from '../../../../common/constants/guns';
 
-export class MachineGun extends Gun {
-  public config: GunConfig = GUNS.MachineGun;
-  public bullets;
-  private spread: number = GUNS.MachineGun.spread;
-
+export class Pistol extends Gun {
+  public config: GunConfig = GUNS.Pistol;
+  public bullets: ParticleSystem<Bullet>;
   private coolDown: boolean = false;
 
   constructor() {
@@ -16,23 +15,14 @@ export class MachineGun extends Gun {
   }
 
   public shoot(position: Vector, direction: Vector): void {
-    if (this.spread < 10) {
-      this.spread += 0.2;
-    }
-
-    this.debouncedShooting(position, direction)
+    this.debouncedShooting(position, direction);
   }
 
-
   public update(): void {
-    if (this.spread > GUNS.MachineGun.spread && !this.coolDown) {
-      this.spread -= 0.2;
-      return;
-    }
   }
 
   public show(): void {
-    this.p5.rect(-6, 20, 12, 50);
+    this.p5.rect(-5, 20, 10, 20);
   }
 
   private emitBullet(position: Vector, direction: Vector): void {
@@ -43,8 +33,8 @@ export class MachineGun extends Gun {
         position.copy().add(offset),
         direction.setMag(this.config.shotVelocity)
           .add(
-            (Math.random() - 0.5) * this.spread,
-            (Math.random() - 0.5) * this.spread)
+            (Math.random() * this.config.spread - (this.config.spread / 2)),
+            (Math.random() * this.config.spread - (this.config.spread / 2)))
           .setMag(this.config.shotVelocity))
     );
   }

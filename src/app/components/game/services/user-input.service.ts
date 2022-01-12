@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {p5InstanceExtensions, Vector} from 'p5';
-import {P5InstanceService} from '../../common/p5-instance.service';
+import {P5InstanceService} from './p5-instance.service';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {InventorySlot} from '../controller/inventory';
 
@@ -21,7 +21,7 @@ export class UserInputService {
 
   constructor() {
     window.onkeydown = (e): void => this.keyDown(e);
-    window.onkeyup = (e): void => this.keyUp(e);
+    window.onkeyup = (): void => this.keyUp();
     window.onmousedown = (e): void => this.mousePressed(e);
     window.onmouseup = (e): void => this.mouseReleased(e);
     window.onclick = (e): void => this.mouseClicked(e);
@@ -63,8 +63,7 @@ export class UserInputService {
     }
   }
 
-  private keyUp(e: KeyboardEvent): void {
-    const _e = e;
+  private keyUp(): void {
     this.updateMoveInput();
   }
 

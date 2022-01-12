@@ -1,6 +1,6 @@
 import {Gun} from '../prefabs/guns/abstract/gun';
 import {Melee} from "../prefabs/melee/abstract/melee";
-import {Hands} from "../prefabs/melee/hands";
+import {Hands} from "../prefabs/melee/hands/hands";
 
 export type InventorySlot = 'primary' | 'secondary' | 'melee';
 

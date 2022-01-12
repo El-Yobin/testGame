@@ -1,5 +1,5 @@
-import { Vector, Image } from 'p5';
-import { P5InstanceService } from '../../common/p5-instance.service';
+import {Image, Vector} from 'p5';
+import {P5InstanceService} from '../services/p5-instance.service';
 
 export class BackgroundGenerator {
   private p5 = P5InstanceService.p5Instance;
@@ -7,7 +7,8 @@ export class BackgroundGenerator {
   private imageHeight: number = 500;
   private imageWidth: number = 500;
 
-  constructor() {}
+  constructor() {
+  }
 
   public generateChunks(backgroundImage: Image): void {
     for (let i = 0; i < 10; i++) {

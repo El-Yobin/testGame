@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { p5InstanceExtensions } from 'p5';
+import {Injectable} from '@angular/core';
+import {p5InstanceExtensions} from 'p5';
 
-@Injectable( {
+@Injectable({
   providedIn: 'root',
 })
 export class P5InstanceService {

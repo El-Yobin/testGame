@@ -1,7 +1,7 @@
-import { Vector } from 'p5';
-import { P5InstanceService } from '../../common/p5-instance.service';
-import { UserInputService } from "../services/user-input.service";
-import { LocatorService } from "../services/locator.service";
+import {Vector} from 'p5';
+import {P5InstanceService} from '../services/p5-instance.service';
+import {UserInputService} from "../services/user-input.service";
+import {LocatorService} from "../services/locator.service";
 
 export class Camera {
   public lerpTranslation: Vector;

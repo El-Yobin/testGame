@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {ParticleSystem} from "../../common/particle-system";
 import {GunNames, MeleeNames} from "../../common/constants/guns";
-import {Bullet} from "../prefabs/particles/bullet";
-import {SwordSwing} from "../prefabs/particles/sword-swing";
+import {Bullet} from "../prefabs/guns/pistol/bullet";
+import {SwordSwing} from "../prefabs/melee/sword/sword-swing";
 
 @Injectable({
   providedIn: 'root'

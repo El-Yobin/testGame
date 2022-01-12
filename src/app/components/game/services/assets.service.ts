@@ -11,7 +11,7 @@ export type AnimationJson = {
   meta: { size: { w: number; h: number; } };
 }
 
-export type Asset = {
+export type ImageAsset = {
   name: string;
   image: Image;
 }
@@ -26,7 +26,7 @@ export type AnimationAsset = {
   providedIn: 'root'
 })
 export class AssetsService {
-  private images: Record<string, Asset> = {};
+  private images: Record<string, ImageAsset> = {};
   private animations: Record<string, AnimationAsset> = {}
   private p5!: p5InstanceExtensions;
 
@@ -39,7 +39,7 @@ export class AssetsService {
     this.loadAnimations();
   }
 
-  public getImage(name: string): Asset {
+  public getImage(name: string): ImageAsset {
     return this.images[name];
   }
 

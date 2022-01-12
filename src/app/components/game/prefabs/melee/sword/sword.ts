@@ -1,14 +1,14 @@
-import {Melee} from "./abstract/melee";
+import {Melee} from "../abstract/melee";
 import {Vector} from "p5";
-import {ParticleSystem} from "../../../common/particle-system";
-import {SwordSwing} from "../particles/sword-swing";
-import {SwordSprite} from "./swordSprite";
-import {MELEE, MeleeConfig} from "../../../common/constants/guns";
+import {ParticleSystem} from "../../../../common/particle-system";
+import {SwordSwing} from "./sword-swing";
+import {MELEE, MeleeConfig} from "../../../../common/constants/guns";
+import {AnimationSprite} from "../../../../common/sprite/animation-sprite";
 
 export class Sword extends Melee {
   public config: MeleeConfig = MELEE.Sword;
   private particleSystem!: ParticleSystem<SwordSwing>;
-  private animationSprite!: SwordSprite;
+  private animationSprite!: AnimationSprite;
   private coolDown: boolean = false;
 
 
@@ -47,6 +47,6 @@ export class Sword extends Melee {
 
   private loadAssets(): void {
     this.particleSystem = this.particleService.getSystem(this.config.name);
-    this.animationSprite = new SwordSprite(this.assetsService.getAnimation(this.config.assetName), this.config.fireRate / 5000);
+    this.animationSprite = new AnimationSprite(this.assetsService.getAnimation(this.config.assetName), this.config.fireRate / 5000);
   }
 }

@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
-import {P5JSInvoker} from './services/p5JSInvoker';
+import {P5JSInvoker} from '../common/p5JSInvoker';
 import {p5InstanceExtensions} from 'p5';
-import {P5InstanceService} from '../common/p5-instance.service';
+import {P5InstanceService} from './services/p5-instance.service';
 import {Player} from './prefabs/player';
 import {Camera} from './controller/camera';
 import {BackgroundGenerator} from './controller/backgroundGenerator';

@@ -1,7 +1,7 @@
-import {Particle} from "../../../common/particle-system";
+import {Particle} from "../../../../common/particle-system";
 import {Vector} from "p5";
-import {RigidBody} from "../../../common/rigidBody";
-import {SwordSprite} from "../melee/swordSprite";
+import {RigidBody} from "../../../../common/rigidBody";
+import {AnimationSprite} from "../../../../common/sprite/animation-sprite";
 
 export class SwordSwing extends RigidBody implements Particle {
 
@@ -9,7 +9,7 @@ export class SwordSwing extends RigidBody implements Particle {
     public override position: Vector,
     private direction: Vector,
     private offset: Vector,
-    private sprite: SwordSprite) {
+    private sprite: AnimationSprite) {
     super();
   }
 

@@ -1,6 +1,6 @@
 import {Vector} from 'p5';
-import {Particle} from '../../../common/particle-system';
-import {RigidBody} from '../../../common/rigidBody';
+import {Particle} from '../../../../common/particle-system';
+import {RigidBody} from '../../../../common/rigidBody';
 
 export class Bullet extends RigidBody implements Particle {
   private readonly direction: Vector;

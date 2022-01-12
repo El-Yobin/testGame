@@ -1,5 +1,5 @@
 import {p5InstanceExtensions, Vector} from "p5";
-import {P5InstanceService} from "../../../../common/p5-instance.service";
+import {P5InstanceService} from "../../../services/p5-instance.service";
 import {AssetsService} from "../../../services/assets.service";
 import {LocatorService} from "../../../services/locator.service";
 import {ParticleService} from "../../../services/particle.service";

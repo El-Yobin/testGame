@@ -1,5 +1,5 @@
-import { p5InstanceExtensions, Vector } from 'p5';
-import { P5InstanceService } from './p5-instance.service';
+import {p5InstanceExtensions, Vector} from 'p5';
+import {P5InstanceService} from '../game/services/p5-instance.service';
 
 export abstract class RigidBody {
   public mass = 1;

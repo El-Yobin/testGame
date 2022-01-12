@@ -3,10 +3,10 @@ import {Vector} from 'p5';
 import {LocatorService} from '../services/locator.service';
 import {UserInputService} from '../services/user-input.service';
 import {Inventory, InventorySlot} from '../controller/inventory';
-import {Pistol} from './guns/pistol';
+import {Pistol} from './guns/pistol/pistol';
 import {takeWhile} from 'rxjs/operators';
-import {MachineGun} from "./guns/machine-gun";
-import {Sword} from "./melee/sword";
+import {MachineGun} from "./guns/machine-gun/machine-gun";
+import {Sword} from "./melee/sword/sword";
 
 export class Player extends Character {
   public inventory: Inventory = new Inventory();
@@ -27,7 +27,7 @@ export class Player extends Character {
   public show(): void {
     this.p5.push();
     this.p5.translate(this.position.x, this.position.y);
-    this.p5.rotate(this.calculateMouseAngle() - this.p5.radians(90))
+    this.p5.rotate(this.p5.atan2(this.getMousePosition().y, this.getMousePosition().x) - this.p5.HALF_PI)
     this.inventory.getSelectedWeapon().show();
     this.p5.circle(0, 0, 60);
     this.p5.pop();
@@ -82,11 +82,11 @@ export class Player extends Character {
     }
   }
 
-  private calculateMouseAngle(): number {
-    return this.p5.atan2(
+  private getMousePosition(): Vector {
+    return this.p5.createVector(
+      this.p5.mouseX - this.p5.width / 2,
       this.p5.mouseY - this.p5.height / 2,
-      this.p5.mouseX - this.p5.width / 2
-    );
+    )
   }
 
   private checkShooting(): void {
@@ -96,11 +96,8 @@ export class Player extends Character {
   }
 
   private shoot() {
-    const x = this.p5.mouseX - this.p5.width / 2;
-    const y = this.p5.mouseY - this.p5.height / 2;
-
     this.inventory
       .getSelectedWeapon()
-      ?.shoot(this.position, this.p5.createVector(x, y));
+      ?.shoot(this.position, this.getMousePosition());
   }
 }
