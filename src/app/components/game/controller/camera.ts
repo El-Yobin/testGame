@@ -41,7 +41,7 @@ export class Camera {
       const y = this.p5.mouseY - this.p5.height / 2;
       const x = this.p5.mouseX - this.p5.width / 2;
 
-      this.nextTranslation.add(this.p5.createVector(x, y).div(5).mult(-1).setMag(100));
+      this.nextTranslation.add(this.p5.createVector(x, y).div(5).mult(-1).setMag(400));
     }
   }
 

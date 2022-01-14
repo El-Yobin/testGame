@@ -1,12 +1,12 @@
 import {Gun} from '../abstract/gun';
-import {ParticleSystem} from '../../../../common/particle-system';
+import {BulletSystem} from '../../../../common/particle-system';
 import {Bullet} from './bullet';
 import {Vector} from 'p5';
 import {GunConfig, GUNS} from '../../../../common/constants/guns';
 
 export class Pistol extends Gun {
   public config: GunConfig = GUNS.Pistol;
-  public bullets: ParticleSystem<Bullet>;
+  public bullets: BulletSystem<Bullet>;
   private coolDown: boolean = false;
 
   constructor() {

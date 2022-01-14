@@ -1,7 +1,7 @@
 import {Queue} from './tools/queue';
 
-export class ParticleSystem<T extends Particle> {
-  private queue: Queue<T>;
+export class ParticleSystem<T extends Particle> implements IParticleSystem<T> {
+  protected queue: Queue<T>;
 
   constructor() {
     this.queue = new Queue();
@@ -22,8 +22,32 @@ export class ParticleSystem<T extends Particle> {
   }
 }
 
+export class BulletSystem<T extends Particle> implements IParticleSystem<T> {
+  public bullets: Array<T> = [];
+
+  emit(particle: T): void {
+    this.bullets.push(particle);
+  }
+
+  run(): void {
+    this.bullets.forEach(particle => {
+      particle.update();
+      particle.show();
+      if (particle.isDead()) {
+        this.bullets = this.bullets.filter(curr => curr !== particle);
+      }
+    })
+  }
+}
+
 export interface Particle {
   update: () => void;
   show: () => void;
   isDead: () => boolean;
+}
+
+export interface IParticleSystem<T> {
+  emit(particle: T): void;
+
+  run(): void;
 }

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ParticleSystem} from "../../common/particle-system";
+import {BulletSystem} from "../../common/particle-system";
 import {GunNames, MeleeNames} from "../../common/constants/guns";
 import {Bullet} from "../prefabs/guns/pistol/bullet";
 import {SwordSwing} from "../prefabs/melee/sword/sword-swing";
@@ -9,11 +9,11 @@ import {SwordSwing} from "../prefabs/melee/sword/sword-swing";
 })
 export class ParticleService {
 
-  private particleSystems: Record<GunNames | MeleeNames, ParticleSystem<any>> = {
-    'Pistol': new ParticleSystem<Bullet>(),
-    'MachineGun': new ParticleSystem<Bullet>(),
-    'Sword': new ParticleSystem<SwordSwing>(),
-    'Hands': new ParticleSystem<any>(),
+  private particleSystems: Record<GunNames | MeleeNames, BulletSystem<any>> = {
+    'Pistol': new BulletSystem<Bullet>(),
+    'MachineGun': new BulletSystem<Bullet>(),
+    'Sword': new BulletSystem<SwordSwing>(),
+    'Hands': new BulletSystem<any>(),
   };
 
   constructor() {
@@ -23,7 +23,7 @@ export class ParticleService {
     Object.values(this.particleSystems).forEach(system => system.run());
   }
 
-  public getSystem(name: GunNames | MeleeNames): ParticleSystem<any> {
+  public getSystem(name: GunNames | MeleeNames): BulletSystem<any> {
     return this.particleSystems[name];
   }
 }

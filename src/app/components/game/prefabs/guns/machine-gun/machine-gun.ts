@@ -2,11 +2,11 @@ import {Gun} from '../abstract/gun';
 import {Bullet} from '../pistol/bullet';
 import {Vector} from 'p5';
 import {GunConfig, GUNS} from '../../../../common/constants/guns';
-import {ParticleSystem} from "../../../../common/particle-system";
+import {BulletSystem} from "../../../../common/particle-system";
 
 export class MachineGun extends Gun {
   public config: GunConfig = GUNS.MachineGun;
-  public bullets: ParticleSystem<Bullet>;
+  public bullets: BulletSystem<Bullet>;
   private spread: number = GUNS.MachineGun.spread;
 
   private coolDown: boolean = false;

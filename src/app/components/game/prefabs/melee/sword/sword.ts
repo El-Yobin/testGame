@@ -1,13 +1,13 @@
 import {Melee} from "../abstract/melee";
 import {Vector} from "p5";
-import {ParticleSystem} from "../../../../common/particle-system";
+import {BulletSystem} from "../../../../common/particle-system";
 import {SwordSwing} from "./sword-swing";
 import {MELEE, MeleeConfig} from "../../../../common/constants/guns";
 import {AnimationSprite} from "../../../../common/sprite/animation-sprite";
 
 export class Sword extends Melee {
   public config: MeleeConfig = MELEE.Sword;
-  private particleSystem!: ParticleSystem<SwordSwing>;
+  private particleSystem!: BulletSystem<SwordSwing>;
   private animationSprite!: AnimationSprite;
   private coolDown: boolean = false;
 
