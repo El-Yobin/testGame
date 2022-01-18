@@ -7,6 +7,8 @@ import {Camera} from './controller/camera';
 import {BackgroundGenerator} from './controller/backgroundGenerator';
 import {ParticleService} from "./services/particle.service";
 import {AssetsService} from "./services/assets.service";
+import {ObjectsGenerator} from "./controller/objectsGenerator";
+import {PhysicsEngineService} from "./services/physics-engine.service";
 
 @Component({
   selector: 'app-game',
@@ -21,10 +23,12 @@ export class GameComponent extends P5JSInvoker implements AfterViewInit {
   private p5Canvas: any;
   private camera!: Camera;
   private backgroundGenerator!: BackgroundGenerator;
+  private boundaryGenerator!: ObjectsGenerator;
 
   constructor(
     private particlesService: ParticleService,
-    private assetsService: AssetsService
+    private assetsService: AssetsService,
+    private physicsService: PhysicsEngineService,
   ) {
     super();
   }
@@ -40,6 +44,7 @@ export class GameComponent extends P5JSInvoker implements AfterViewInit {
 
   public setup(p5: p5InstanceExtensions): void {
     this.createBackground();
+    this.createBoundaries();
     this.createCanvas();
     this.createCamera();
     this.createPlayer();
@@ -49,9 +54,10 @@ export class GameComponent extends P5JSInvoker implements AfterViewInit {
     this.p5.frameRate(this.frameRate)
     this.updateDeltaTime();
     this.updateCanvas();
+    this.updateBoundaries();
     this.updateParticles();
-    this.p5.rect(500, 0, 50, 1000)
     this.updatePlayer();
+    this.updatePhysics();
   }
 
   private createCanvas(): void {
@@ -74,6 +80,12 @@ export class GameComponent extends P5JSInvoker implements AfterViewInit {
     this.backgroundGenerator.generateChunks(this.assetsService.getImage('background').image);
   }
 
+  private createBoundaries(): void {
+    this.boundaryGenerator = new ObjectsGenerator();
+    this.boundaryGenerator.generateObjects(this.assetsService.getBoundaries());
+    this.physicsService.addObjects(this.boundaryGenerator.objects)
+  }
+
   private updateCanvas(): void {
     this.updateCamera();
     this.updateBackground();
@@ -93,11 +105,19 @@ export class GameComponent extends P5JSInvoker implements AfterViewInit {
     this.backgroundGenerator.update(this.camera.lerpTranslation);
   }
 
+  private updateBoundaries(): void {
+    this.boundaryGenerator.updateObjects();
+  }
+
   private updateCamera(): void {
     this.camera.update(this.player.position);
   }
 
   private updateDeltaTime(): void {
     P5InstanceService.delta = this.p5.deltaTime;
+  }
+
+  private updatePhysics(): void {
+    this.physicsService.update();
   }
 }

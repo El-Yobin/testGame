@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Image, p5InstanceExtensions} from "p5";
-import {ANIMATIONS, IMAGES} from "../../common/constants/assets";
+import {ANIMATIONS, BOUNDARIES, BoundaryData, IMAGES} from "../../common/constants/assets";
 
 export type AnimationJson = {
   frames: Array<{
@@ -28,6 +28,7 @@ export type AnimationAsset = {
 export class AssetsService {
   private images: Record<string, ImageAsset> = {};
   private animations: Record<string, AnimationAsset> = {}
+  private boundaries: BoundaryData[] = [];
   private p5!: p5InstanceExtensions;
 
   constructor() {
@@ -37,6 +38,7 @@ export class AssetsService {
     this.p5 = p5;
     this.loadImages();
     this.loadAnimations();
+    this.loadBoundaries();
   }
 
   public getImage(name: string): ImageAsset {
@@ -45,6 +47,10 @@ export class AssetsService {
 
   public getAnimation(name: string): AnimationAsset {
     return this.animations[name];
+  }
+
+  public getBoundaries(): BoundaryData[] {
+    return this.boundaries;
   }
 
   private loadImages(): void {
@@ -68,5 +74,9 @@ export class AssetsService {
         }
       }))
     })
+  }
+
+  private loadBoundaries(): void {
+    this.boundaries = BOUNDARIES;
   }
 }

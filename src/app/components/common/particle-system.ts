@@ -1,7 +1,7 @@
 import {Queue} from './tools/queue';
 
 export class ParticleSystem<T extends Particle> implements IParticleSystem<T> {
-  protected queue: Queue<T>;
+  public queue: Queue<T>;
 
   constructor() {
     this.queue = new Queue();

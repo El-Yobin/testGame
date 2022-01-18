@@ -1,6 +1,17 @@
 import * as p5Methods from 'p5';
 import {RigidBody} from '../rigidBody';
 
+export type LineLineCollision = {
+  intersect: boolean;
+  x: number;
+  y: number;
+}
+
+export type LineRectCollision = {
+  intersect: boolean;
+  intersections: LineLineCollision[];
+}
+
 export function calculateSpringForce(
   object: RigidBody,
   origin: p5Methods.Vector,
@@ -30,7 +41,7 @@ export function collideLineLine(
   y3: number,
   x4: number,
   y4: number
-) {
+): LineLineCollision {
   const uA = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
   const uB = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
 
@@ -50,4 +61,29 @@ export function collideLineLine(
     x: 0,
     y: 0,
   };
+}
+
+export function collideLineRect(
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
+  rx: number,
+  ry: number,
+  rw: number,
+  rh: number
+): LineRectCollision {
+
+  const intersections: LineLineCollision[] = [
+    collideLineLine(x1, y1, x2, y2, rx, ry, rx, ry + rh),
+    collideLineLine(x1, y1, x2, y2, rx + rw, ry, rx + rw, ry + rh),
+    collideLineLine(x1, y1, x2, y2, rx, ry, rx + rw, ry),
+    collideLineLine(x1, y1, x2, y2, rx, ry + rh, rx + rw, ry + rh)
+  ];
+
+
+  return {
+    intersect: Boolean(intersections.length),
+    intersections: intersections.filter(item => item.intersect),
+  }
 }
