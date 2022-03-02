@@ -9,11 +9,14 @@ export type AnimationData = {
   json: string;
 }
 
+export type BoundaryType = 'rect'
+
 export type BoundaryData = {
-  X: number,
-  Y: number,
-  W: number,
-  H: number,
+  type: BoundaryType,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
 }
 
 export const IMAGES: ImageData[] = [
@@ -34,33 +37,38 @@ export const ANIMATIONS: AnimationData[] = [
 
 export const BOUNDARIES: BoundaryData[] = [
   {
-    X: 500,
-    Y: 0,
-    W: 50,
-    H: 500,
+    type: 'rect',
+    x: 500,
+    y: 0,
+    w: 50,
+    h: 500,
   },
   {
-    X: 0,
-    Y: 500,
-    W: 500,
-    H: 50,
+    type: 'rect',
+    x: 0,
+    y: 500,
+    w: 500,
+    h: 50,
   },
   {
-    X: 1000,
-    Y: 300,
-    W: 100,
-    H: 100,
+    type: 'rect',
+    x: 1000,
+    y: 300,
+    w: 100,
+    h: 100,
   },
   {
-    X: 500,
-    Y: 700,
-    W: 1000,
-    H: 50,
+    type: 'rect',
+    x: 500,
+    y: 700,
+    w: 1000,
+    h: 50,
   },
   {
-    X: 100,
-    Y: 1000,
-    W: 50,
-    H: 300,
+    type: 'rect',
+    x: 100,
+    y: 1000,
+    w: 50,
+    h: 300,
   }
 ]

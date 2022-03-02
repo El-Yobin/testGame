@@ -1,4 +1,5 @@
 import * as p5Methods from 'p5';
+import {Vector} from 'p5';
 import {RigidBody} from '../rigidBody';
 
 export type LineLineCollision = {
@@ -10,6 +11,12 @@ export type LineLineCollision = {
 export type LineRectCollision = {
   intersect: boolean;
   intersections: LineLineCollision[];
+}
+
+export type RectCircleCollision = {
+  intersect: boolean;
+  x: number;
+  y: number;
 }
 
 export function calculateSpringForce(
@@ -85,5 +92,42 @@ export function collideLineRect(
   return {
     intersect: Boolean(intersections.length),
     intersections: intersections.filter(item => item.intersect),
+  }
+}
+
+export function collideRectCircle(
+  rx: number,
+  ry: number,
+  rw: number,
+  rh: number,
+  cx: number,
+  cy: number,
+  diameter: number,
+): RectCircleCollision {
+  //2d
+  // temporary variables to set edges for testing
+  let closestX = cx;
+  let closestY = cy;
+
+  // which edge is closest?
+  if (cx < rx) {
+    closestX = rx       // left edge
+  } else if (cx > rx + rw) {
+    closestX = rx + rw
+  }   // right edge
+
+  if (cy < ry) {
+    closestY = ry       // top edge
+  } else if (cy > ry + rh) {
+    closestY = ry + rh
+  }   // bottom edge
+
+  // // get distance from the closest edges
+  const distance = p5Methods.Vector.dist(new Vector().set(cx, cy), new Vector().set(closestX, closestY))
+
+  return {
+    intersect: distance <= diameter / 2,
+    x: closestX,
+    y: closestY,
   }
 }

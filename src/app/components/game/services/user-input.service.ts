@@ -48,18 +48,20 @@ export class UserInputService {
   }
 
   private keyDown(e: KeyboardEvent): void {
-    this.updateMoveInput();
+    if (!e.repeat) {
+      this.updateMoveInput();
 
-    switch (e.key) {
-      case '1':
-        this.slotSelected$.next('primary');
-        break;
-      case '2':
-        this.slotSelected$.next('secondary');
-        break;
-      case '3':
-        this.slotSelected$.next('melee');
-        break;
+      switch (e.key) {
+        case '1':
+          this.slotSelected$.next('primary');
+          break;
+        case '2':
+          this.slotSelected$.next('secondary');
+          break;
+        case '3':
+          this.slotSelected$.next('melee');
+          break;
+      }
     }
   }
 

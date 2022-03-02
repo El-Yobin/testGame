@@ -8,9 +8,11 @@ import {MachineGun} from "../guns/machine-gun/machine-gun";
 import {Sword} from "../melee/sword/sword";
 import {P5InstanceService} from "../../services/p5-instance.service";
 import {RigidBody} from "../../../common/rigidBody";
+import {RectCircleCollision} from "../../../common/tools/calculations";
 
 export class Player extends RigidBody {
   public inventory: Inventory = new Inventory();
+  public diameter: number = 60;
   private maxSpeed = 5;
   private active = true;
   private moveInput: Vector = new Vector();
@@ -31,7 +33,7 @@ export class Player extends RigidBody {
     this.p5.translate(this.position.x, this.position.y);
     this.p5.rotate(this.p5.atan2(this.getMousePosition().y, this.getMousePosition().x) - this.p5.HALF_PI)
     this.inventory.getSelectedWeapon().show();
-    this.p5.circle(0, 0, 60);
+    this.p5.circle(0, 0, this.diameter);
     this.p5.pop();
   }
 
@@ -40,6 +42,14 @@ export class Player extends RigidBody {
     this.moveByInput();
     this.checkShooting();
   }
+
+
+  public resolveCollision(collision: RectCircleCollision) {
+    const collisionDir = Vector.sub(this.p5.createVector(collision.x, collision.y), this.position).normalize();
+
+    this.position.add(collisionDir.setMag(-this.diameter / 2));
+  }
+
 
   private subscribeToUserInput(): void {
     this.userInput

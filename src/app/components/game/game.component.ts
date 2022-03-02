@@ -69,6 +69,7 @@ export class GameComponent extends P5JSInvoker implements AfterViewInit {
 
   private createPlayer(): void {
     this.player = new Player();
+    this.physicsService.addPlayer(this.player);
   }
 
   private createCamera(): void {
