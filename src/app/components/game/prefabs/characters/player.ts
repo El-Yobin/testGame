@@ -45,9 +45,11 @@ export class Player extends RigidBody {
 
 
   public resolveCollision(collision: RectCircleCollision) {
+    // todo: still not working as expected
+
     const collisionDir = Vector.sub(this.p5.createVector(collision.x, collision.y), this.position).normalize();
 
-    this.position.add(collisionDir.setMag(-this.diameter / 2));
+    // this.position.set(collisionDir.setMag(-this.diameter / 2));
   }
 
 
